@@ -1,0 +1,29 @@
+.editor-content {
+    height: 100%;
+    width: calc(100% - 80px);
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-container {
+    width: 100%;
+    position: relative;
+    height: calc((100% - 94px) - 12px);
+    background: rgb(248, 250, 251);
+    overflow: hidden;
+    min-height: 250px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.tool-bar {
+    padding: 8px 1px 0px;
+    width: fit-content;
+    margin: 0px auto;
+    max-width: 99.5%;
+    min-height: 92px;
+    overflow: hidden;
+}

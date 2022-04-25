@@ -1,0 +1,40 @@
+.item {
+    padding: 5px;
+}
+
+.item > div {
+    display: inline-flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin: 0px 4px;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.item > div > img {
+    position: relative;
+    user-select: none;
+    width: 80px;
+    height: 55px;
+    object-fit: cover;
+}
+
+.item > div > label {
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 12px;
+}
+
+.item > div[aria-selected="true"] > img{
+    padding: 1px;
+    border: 2px solid rgb(73, 88, 188);
+    border-radius: 2px;
+}
+
+.item > div[aria-selected="true"] > label{
+    color: rgb(73, 88, 188);
+}
