@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import TabItem from "./TabItem.js";
 import "./SideBar.css";
 import { SVGAdjust, SVGFinetune, SVGFilter, SVGDraw } from "../../utils/svg.js";
+import { useSelector } from "react-redux";
 
 const tabs = [
     {
@@ -26,15 +27,17 @@ const tabs = [
     },
 ];
 
-const SideBar = ({ tab, setTab, setImageUrl, setFile }) => {
+const SideBar = ({ setImageUrl, setFile }) => {
     const fileRef = useRef(null);
 
+    const { tab } = useSelector((state) => state.tab);
+
     const handleClick = (e) => {
-        fileRef.current.click()
+        fileRef.current.click();
     };
 
     const handleChange = (e) => {
-        setFile(e.target.files[0])
+        setFile(e.target.files[0]);
         setImageUrl(URL.createObjectURL(e.target.files[0]));
     };
 
@@ -46,7 +49,6 @@ const SideBar = ({ tab, setTab, setImageUrl, setFile }) => {
                     icon={item.icon}
                     tab={item.tab}
                     name={item.name}
-                    setTab={setTab}
                     isSelected={tab === item.tab}
                 />
             ))}

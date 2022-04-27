@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Canvas from "../Canvas/index.js";
 import SideBar from "../SideBar/index.js";
+import TopBar from "../TopBar/index.js";
 import "./index.css";
 
 const Main = () => {
@@ -10,21 +12,24 @@ const Main = () => {
     const [file, setFile] = useState("");
 
     return (
-        <div className="main">
-            <SideBar
-                tab={tab}
-                setTab={setTab}
-                setImageUrl={setImageUrl}
-                file={file}
-                setFile={setFile}
-            />
-            <Canvas
-                imageUrl={imageUrl}
-                setImageUrl={setImageUrl}
-                file={file}
-                setFile={setFile}
-                tab={tab}
-            />
+        <div className="container">
+            <TopBar />
+            <div className="main">
+                <SideBar
+                    tab={tab}
+                    setTab={setTab}
+                    setImageUrl={setImageUrl}
+                    file={file}
+                    setFile={setFile}
+                />
+                <Canvas
+                    imageUrl={imageUrl}
+                    setImageUrl={setImageUrl}
+                    file={file}
+                    setFile={setFile}
+                    tab={tab}
+                />
+            </div>
         </div>
     );
 };

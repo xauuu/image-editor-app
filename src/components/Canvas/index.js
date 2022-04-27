@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import ToolBar from "../ToolBar/index.js";
+import Filters from "../ToolBar/Filters.js";
 import "./Canvas.css";
-import Konva from "./Konva.js";
+import Konvas from "./Konva.js";
 import Loading from "./../Loading/index";
+import FineTune from "../ToolBar/FineTune.js";
+import { useSelector } from 'react-redux';
 
-const Canvas = ({ imageUrl, setImageUrl, file, setFile, tab }) => {
+const Canvas = ({ imageUrl, setImageUrl, file, setFile }) => {
     const canvasRef = useRef();
     const [canvas, setCanvas] = useState({ height: 0, width: 0 });
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const { tab } = useSelector((state) => state.tab);
 
     useEffect(() => {
         setCanvas({
@@ -23,7 +27,7 @@ const Canvas = ({ imageUrl, setImageUrl, file, setFile, tab }) => {
             
             <div ref={canvasRef} className="canvas-container">
             {isLoading && <Loading />}
-                <Konva
+                <Konvas
                     imageUrl={imageUrl}
                     height={canvas.height}
                     width={canvas.width}
@@ -31,13 +35,15 @@ const Canvas = ({ imageUrl, setImageUrl, file, setFile, tab }) => {
             </div>
             <div className="tool-bar">
                 {tab === "filter" && (
-                    <ToolBar
+                    <Filters
                         setImageUrl={setImageUrl}
                         file={file}
                         setFile={setFile}
                         setIsLoading={setIsLoading}
                     />
                 )}
+
+                {tab === 'finetune' && <FineTune />}
             </div>
         </div>
     );

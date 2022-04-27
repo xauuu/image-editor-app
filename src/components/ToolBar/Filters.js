@@ -4,7 +4,8 @@ import API from "../../utils/API.js";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./ToolBar.css";
-import Item from "./Item.js";
+import Item from "./ItemFilter.js";
+import { useSelector } from "react-redux";
 
 const filterItems = [
     {
@@ -59,7 +60,8 @@ const settings = {
 };
 
 const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
-    const [selectedTool, setSelectedTool] = useState("original");
+
+    const { tool } = useSelector((state) => state.tool);
 
     useEffect(() => {
         const formData = new FormData();
@@ -70,7 +72,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
 
         const fetchData = async () => {
             setIsLoading(true);
-            if (selectedTool === "hist") {
+            if (tool === "hist") {
                 await API.post("/point/hist", formData).then((response) => {
                     if (response.status === 200) {
                         setImageUrl(
@@ -80,10 +82,10 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                         setIsLoading(false);
                     } else return;
                 });
-            } else if (selectedTool === "original") {
+            } else if (tool === "original") {
                 setImageUrl(URL.createObjectURL(file));
                 setIsLoading(false);
-            } else if (selectedTool === "blur") {
+            } else if (tool === "blur") {
                 await API.post("/filter/gaussian_blur", formData).then(
                     (response) => {
                         if (response.status === 200) {
@@ -95,7 +97,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                         } else return;
                     }
                 );
-            } else if (selectedTool === "reverse") {
+            } else if (tool === "reverse") {
                 await API.post("/point/reverse", formData).then((response) => {
                     if (response.status === 200) {
                         setImageUrl(
@@ -105,21 +107,23 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                         setIsLoading(false);
                     } else return;
                 });
-            } else if (selectedTool === "threshold") {
-                await API.post("/point/threshold", formData).then((response) => {
-                    if (response.status === 200) {
-                        setImageUrl(
-                            "http://192.168.123.86:8000/exports/" +
-                                response.data.filename
-                        );
-                        setIsLoading(false);
-                    } else return;
-                });
+            } else if (tool === "threshold") {
+                await API.post("/point/threshold", formData).then(
+                    (response) => {
+                        if (response.status === 200) {
+                            setImageUrl(
+                                "http://192.168.123.86:8000/exports/" +
+                                    response.data.filename
+                            );
+                            setIsLoading(false);
+                        } else return;
+                    }
+                );
             }
         };
 
         fetchData();
-    }, [selectedTool]);
+    }, [tool]);
 
     return (
         <Slider {...settings}>
@@ -129,8 +133,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                     tool={item.tool}
                     img={item.img}
                     name={item.name}
-                    isSelected={selectedTool === item.tool}
-                    setSelectedTool={setSelectedTool}
+                    isSelected={tool === item.tool}
                 />
             ))}
         </Slider>

@@ -1,13 +1,18 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    width: 100%;
+    height: 100vh;
+    background-color: whitesmoke;
 }
 
+:not(button) > svg:not([color]) {
+    color: rgb(93, 109, 126);
+}

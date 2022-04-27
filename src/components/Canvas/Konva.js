@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Stage, Layer, Image } from "react-konva";
 import useImage from "use-image";
+import Konva from "konva";
+import { useSelector } from "react-redux";
 
-const Konva = ({ imageUrl, height, width }) => {
+const Konvas = ({ imageUrl, height, width }) => {
     const [image] = useImage(imageUrl);
+    const imageRef = React.useRef();
+
+    const { brighten, contrast, blur } = useSelector((state) => state.value);
+
+    console.log(blur);
+
     const [coordinates, setCoordinates] = useState({
         x: width / 2,
         y: height / 2,
@@ -27,6 +35,13 @@ const Konva = ({ imageUrl, height, width }) => {
             width: image?.width * scale1,
             height: image?.height * scale1,
         });
+    }, [image]);
+
+    React.useEffect(() => {
+        if (image) {
+            // you many need to reapply cache on some props changes like shadow, stroke, etc.
+            imageRef.current.cache();
+        }
     }, [image]);
 
     const handleWheel = (e) => {
@@ -66,15 +81,24 @@ const Konva = ({ imageUrl, height, width }) => {
         >
             <Layer>
                 <Image
+                    ref={imageRef}
                     x={imageAttr.x}
                     y={imageAttr.y}
                     width={imageAttr.width}
                     height={imageAttr.height}
                     image={image}
+                    filters={[
+                        Konva.Filters.Brighten,
+                        Konva.Filters.Contrast,
+                        Konva.Filters.Blur,
+                    ]}
+                    blurRadius={blur}
+                    brightness={brighten}
+                    contrast={contrast}
                 />
             </Layer>
         </Stage>
     );
 };
 
-export default Konva;
+export default Konvas;

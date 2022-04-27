@@ -1,11 +1,23 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { TAB_CHANGE } from './../../store/constants';
 
-const TabItem = ({ icon, tab, isSelected, name, setTab }) => {
+const TabItem = ({ icon, tab, isSelected, name }) => {
+
+    const dispatch = useDispatch()
+
+    const handleClick = () => {
+        dispatch({
+            type: TAB_CHANGE,
+            tab: tab
+        })
+    }
+
     return (
         <div
             className="sideBar-item"
             aria-selected={isSelected}
-            onClick={() => setTab(tab)}
+            onClick={handleClick}
         >
             {icon}
             <label>{name}</label>
