@@ -120,6 +120,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                     }
                 );
             }
+            setIsLoading(false);
         };
 
         fetchData();

@@ -12,6 +12,7 @@ import ItemFineTune from "./ItemFineTune.js";
 import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { FINETUNE_VALUE_CHANGE } from "../../store/constants.js";
+import { FINETUNE_CHANGE } from './../../store/constants';
 
 const finetunes = [
     {
@@ -81,6 +82,13 @@ const FineTune = () => {
         }
     }, [finetune, brighten, contrast, blur]);
 
+    const handleClick = (tool) => {
+        dispatch({
+            type: FINETUNE_CHANGE,
+            finetune: tool,
+        });
+    };
+
     return (
         <React.Fragment>
             <div className="toolbar-options">
@@ -122,6 +130,7 @@ const FineTune = () => {
                         icon={item.icon}
                         name={item.name}
                         isSelected={finetune === item.tool}
+                        onClick={handleClick}
                     />
                 ))}
             </div>

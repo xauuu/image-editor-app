@@ -4,7 +4,8 @@ import "./Canvas.css";
 import Konvas from "./Konva.js";
 import Loading from "./../Loading/index";
 import FineTune from "../ToolBar/FineTune.js";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import Adjust from "./../ToolBar/Adjust";
 
 const Canvas = ({ imageUrl, setImageUrl, file, setFile }) => {
     const canvasRef = useRef();
@@ -21,12 +22,10 @@ const Canvas = ({ imageUrl, setImageUrl, file, setFile }) => {
         });
     }, []);
 
-
     return (
         <div className="editor-content">
-            
             <div ref={canvasRef} className="canvas-container">
-            {isLoading && <Loading />}
+                {isLoading && <Loading />}
                 <Konvas
                     imageUrl={imageUrl}
                     height={canvas.height}
@@ -43,7 +42,8 @@ const Canvas = ({ imageUrl, setImageUrl, file, setFile }) => {
                     />
                 )}
 
-                {tab === 'finetune' && <FineTune />}
+                {tab === "finetune" && <FineTune />}
+                {tab === "adjust" && <Adjust />}
             </div>
         </div>
     );

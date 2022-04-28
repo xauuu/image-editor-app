@@ -39,6 +39,7 @@ const SideBar = ({ setImageUrl, setFile }) => {
     const handleChange = (e) => {
         setFile(e.target.files[0]);
         setImageUrl(URL.createObjectURL(e.target.files[0]));
+        console.log(URL.createObjectURL(e.target.files[0]));
     };
 
     return (

@@ -7,11 +7,8 @@ import { useSelector } from "react-redux";
 const Konvas = ({ imageUrl, height, width }) => {
     const [image] = useImage(imageUrl);
     const imageRef = React.useRef();
-
     const { brighten, contrast, blur } = useSelector((state) => state.value);
-
-    console.log(blur);
-
+    const { flipx, flipy } = useSelector((state) => state.flip);
     const [coordinates, setCoordinates] = useState({
         x: width / 2,
         y: height / 2,
@@ -22,7 +19,6 @@ const Konvas = ({ imageUrl, height, width }) => {
         width: 0,
         height: 0,
     });
-
     const [scale, setScale] = useState(1);
 
     useEffect(() => {
@@ -39,10 +35,9 @@ const Konvas = ({ imageUrl, height, width }) => {
 
     React.useEffect(() => {
         if (image) {
-            // you many need to reapply cache on some props changes like shadow, stroke, etc.
             imageRef.current.cache();
         }
-    }, [image]);
+    });
 
     const handleWheel = (e) => {
         e.evt.preventDefault();
@@ -82,10 +77,14 @@ const Konvas = ({ imageUrl, height, width }) => {
             <Layer>
                 <Image
                     ref={imageRef}
-                    x={imageAttr.x}
-                    y={imageAttr.y}
+                    scaleY={flipx ? -1 : 1}
+                    scaleX={flipy ? -1 : 1}
+                    x={imageAttr.width / 2}
+                    y={imageAttr.height / 2}
                     width={imageAttr.width}
                     height={imageAttr.height}
+                    offsetX={imageAttr.width / 2}
+                    offsetY={imageAttr.height / 2}
                     image={image}
                     filters={[
                         Konva.Filters.Brighten,
