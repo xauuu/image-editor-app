@@ -102,7 +102,7 @@ const ToolBar = ({ setIsLoading }) => {
                 });
                 setIsLoading(false);
             } else if (tool === "blur") {
-                await API.post("/filter/gaussian_blur", formData).then(
+                await API.post("/filter/gaussian-blur", formData).then(
                     (response) => {
                         if (response.status === 200) {
                             dispatch({
