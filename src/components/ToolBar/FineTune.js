@@ -11,8 +11,7 @@ import Slider from "@mui/material/Slider";
 import ItemFineTune from "./ItemFineTune.js";
 import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { FINETUNE_VALUE_CHANGE } from "../../store/constants.js";
-import { FINETUNE_CHANGE } from './../../store/constants';
+import { FINETUNE_CHANGE, FINETUNE_VALUE_CHANGE } from "./../../store/actions";
 
 const finetunes = [
     {

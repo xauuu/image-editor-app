@@ -1,4 +1,4 @@
-import { FINETUNE_CHANGE } from "./constants";
+import { FINETUNE_CHANGE } from './actions';
 
 const initialState = {
     finetune: "",

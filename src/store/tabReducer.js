@@ -1,4 +1,4 @@
-import { TAB_CHANGE } from './constants';
+import { TAB_CHANGE } from './actions';
 
 const initialState = {
     tab: "",

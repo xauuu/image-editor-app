@@ -1,4 +1,4 @@
-import { FINETUNE_VALUE_CHANGE } from "./constants";
+import { FINETUNE_VALUE_CHANGE } from "./actions";
 
 const initialState = {
     brighten: 0,

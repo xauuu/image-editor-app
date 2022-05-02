@@ -6,7 +6,7 @@ import {
     FINETUNE_CHANGE,
     FLIPX_CHANGE,
     FLIPY_CHANGE,
-} from "./../../store/constants";
+} from "./../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const adjusts = [

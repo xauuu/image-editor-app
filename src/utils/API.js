@@ -1,7 +1,8 @@
 import axios from "axios";
+import { apiDomain } from './../store/constants';
 
 export default axios.create({
-  baseURL: "http://192.168.123.86:8000",
+  baseURL: apiDomain,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "multipart/form-data",

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import "./ToolBar.css";
-import { TOOL_CHANGE } from './../../store/constants';
+import { TOOL_CHANGE } from './../../store/actions';
 
 const Item = ({ tool, img, name, isSelected }) => {
 

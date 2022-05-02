@@ -1,4 +1,4 @@
-import { FLIPX_CHANGE, FLIPY_CHANGE } from "./constants";
+import { FLIPX_CHANGE, FLIPY_CHANGE } from "./actions";
 
 const initialState = {
     flipx: false,

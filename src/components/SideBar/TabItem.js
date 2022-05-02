@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
-import { TAB_CHANGE } from './../../store/constants';
+import { TAB_CHANGE } from './../../store/actions';
 
 const TabItem = ({ icon, tab, isSelected, name }) => {
 

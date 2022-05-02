@@ -1,7 +1,7 @@
 import React from "react";
 import "./TopBar.css";
 import { useDispatch } from 'react-redux';
-import { FINETUNE_VALUE_CHANGE } from './../../store/constants';
+import { FINETUNE_VALUE_CHANGE } from './../../store/actions';
 
 const TopBar = () => {
 

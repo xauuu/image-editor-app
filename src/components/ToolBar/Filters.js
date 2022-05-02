@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./ToolBar.css";
 import Item from "./ItemFilter.js";
 import { useSelector } from "react-redux";
+import { urlImage } from "../../store/constants.js";
 
 const filterItems = [
     {
@@ -60,25 +61,24 @@ const settings = {
 };
 
 const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
-
     const { tool } = useSelector((state) => state.tool);
 
     useEffect(() => {
         const formData = new FormData();
         formData.append("file", file);
+        // formData.append("name", "jpeg");
         formData.append("a", 50);
         formData.append("b", 120);
+        formData.append("c", 0);
         formData.append("x", 5);
+        formData.append("k", 0);
 
         const fetchData = async () => {
             setIsLoading(true);
             if (tool === "hist") {
                 await API.post("/point/hist", formData).then((response) => {
                     if (response.status === 200) {
-                        setImageUrl(
-                            "http://192.168.123.86:8000/exports/" +
-                                response.data.filename
-                        );
+                        setImageUrl(urlImage + response.data.filename);
                         setIsLoading(false);
                     } else return;
                 });
@@ -89,10 +89,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                 await API.post("/filter/gaussian_blur", formData).then(
                     (response) => {
                         if (response.status === 200) {
-                            setImageUrl(
-                                "http://192.168.123.86:8000/exports/" +
-                                    response.data.filename
-                            );
+                            setImageUrl(urlImage + response.data.filename);
                             setIsLoading(false);
                         } else return;
                     }
@@ -100,10 +97,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
             } else if (tool === "reverse") {
                 await API.post("/point/reverse", formData).then((response) => {
                     if (response.status === 200) {
-                        setImageUrl(
-                            "http://192.168.123.86:8000/exports/" +
-                                response.data.filename
-                        );
+                        setImageUrl(urlImage + response.data.filename);
                         setIsLoading(false);
                     } else return;
                 });
@@ -111,10 +105,7 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                 await API.post("/point/threshold", formData).then(
                     (response) => {
                         if (response.status === 200) {
-                            setImageUrl(
-                                "http://192.168.123.86:8000/exports/" +
-                                    response.data.filename
-                            );
+                            setImageUrl(urlImage + response.data.filename);
                             setIsLoading(false);
                         } else return;
                     }

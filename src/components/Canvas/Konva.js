@@ -33,7 +33,7 @@ const Konvas = ({ imageUrl, height, width }) => {
         });
     }, [image]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (image) {
             imageRef.current.cache();
         }
@@ -63,6 +63,7 @@ const Konvas = ({ imageUrl, height, width }) => {
         });
     };
 
+    console.log(contrast);
     return (
         <Stage
             width={width}
