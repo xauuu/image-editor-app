@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import TabItem from "./TabItem.js";
 import "./SideBar.css";
 import { SVGAdjust, SVGFinetune, SVGFilter, SVGDraw } from "../../utils/svg.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { IMG_CHANGE, IMG_NAME_CHANGE, IMG_UPLOAD } from './../../store/actions';
 
 const tabs = [
     {
@@ -27,19 +28,36 @@ const tabs = [
     },
 ];
 
-const SideBar = ({ setImageUrl, setFile }) => {
+const SideBar = () => {
     const fileRef = useRef(null);
-
+    const dispatch = useDispatch()
     const { tab } = useSelector((state) => state.tab);
 
     const handleClick = (e) => {
         fileRef.current.click();
     };
 
-    const handleChange = (e) => {
-        setFile(e.target.files[0]);
-        setImageUrl(URL.createObjectURL(e.target.files[0]));
-        console.log(URL.createObjectURL(e.target.files[0]));
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file)
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          }
+          fileReader.onerror = (error) => {
+            reject(error);
+          }
+        })
+      }
+
+    const handleChange = async (e) => {
+        const file = e.target.files[0]
+        const base64 = await convertBase64(file)
+        dispatch({
+            type: IMG_UPLOAD,
+            url: base64,
+            name: e.target.files[0].name
+        })
     };
 
     return (

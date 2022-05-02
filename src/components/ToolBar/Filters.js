@@ -5,8 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./ToolBar.css";
 import Item from "./ItemFilter.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { urlImage } from "../../store/constants.js";
+import { IMG_CHANGE } from "./../../store/actions";
 
 const filterItems = [
     {
@@ -41,14 +42,20 @@ const filterItems = [
     },
     {
         id: 6,
-        tool: "midpoint",
-        name: "Midpoint",
+        tool: "grahp-cut",
+        name: "Grahp Cut",
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
         id: 7,
-        tool: "harmonic",
-        name: "Harmonic",
+        tool: "meanshift",
+        name: "Meanshift",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
+    },
+    {
+        id: 8,
+        tool: "kmean",
+        name: "Kmean",
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
 ];
@@ -60,36 +67,48 @@ const settings = {
     slidesToScroll: 1,
 };
 
-const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
+const ToolBar = ({ setIsLoading }) => {
+    const dispatch = useDispatch();
     const { tool } = useSelector((state) => state.tool);
+    const { imgUrl, imgName } = useSelector((state) => state.img);
 
     useEffect(() => {
-        const formData = new FormData();
-        formData.append("file", file);
-        // formData.append("name", "jpeg");
-        formData.append("a", 50);
-        formData.append("b", 120);
-        formData.append("c", 0);
-        formData.append("x", 5);
-        formData.append("k", 0);
+        let formData = {
+            uri: imgUrl,
+            name: imgName,
+            a: 50,
+            b: 120,
+            c: 0,
+            x: 5,
+            k: 3,
+        };
 
         const fetchData = async () => {
             setIsLoading(true);
             if (tool === "hist") {
                 await API.post("/point/hist", formData).then((response) => {
                     if (response.status === 200) {
-                        setImageUrl(urlImage + response.data.filename);
+                        dispatch({
+                            type: IMG_CHANGE,
+                            image: urlImage + response.data.filename,
+                        });
                         setIsLoading(false);
                     } else return;
                 });
             } else if (tool === "original") {
-                setImageUrl(URL.createObjectURL(file));
+                dispatch({
+                    type: IMG_CHANGE,
+                    image: imgUrl,
+                });
                 setIsLoading(false);
             } else if (tool === "blur") {
                 await API.post("/filter/gaussian_blur", formData).then(
                     (response) => {
                         if (response.status === 200) {
-                            setImageUrl(urlImage + response.data.filename);
+                            dispatch({
+                                type: IMG_CHANGE,
+                                image: urlImage + response.data.filename,
+                            });
                             setIsLoading(false);
                         } else return;
                     }
@@ -97,7 +116,10 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
             } else if (tool === "reverse") {
                 await API.post("/point/reverse", formData).then((response) => {
                     if (response.status === 200) {
-                        setImageUrl(urlImage + response.data.filename);
+                        dispatch({
+                            type: IMG_CHANGE,
+                            image: urlImage + response.data.filename,
+                        });
                         setIsLoading(false);
                     } else return;
                 });
@@ -105,7 +127,46 @@ const ToolBar = ({ setImageUrl, file, setIsLoading }) => {
                 await API.post("/point/threshold", formData).then(
                     (response) => {
                         if (response.status === 200) {
-                            setImageUrl(urlImage + response.data.filename);
+                            dispatch({
+                                type: IMG_CHANGE,
+                                image: urlImage + response.data.filename,
+                            });
+                            setIsLoading(false);
+                        } else return;
+                    }
+                );
+            } else if (tool === "grahp-cut") {
+                await API.post("/segment/grahp-cut", formData).then(
+                    (response) => {
+                        if (response.status === 200) {
+                            dispatch({
+                                type: IMG_CHANGE,
+                                image: urlImage + response.data.filename,
+                            });
+                            setIsLoading(false);
+                        } else return;
+                    }
+                );
+            } else if (tool === "kmean") {
+                await API.post("/segment/kmean", formData).then(
+                    (response) => {
+                        if (response.status === 200) {
+                            dispatch({
+                                type: IMG_CHANGE,
+                                image: urlImage + response.data.filename,
+                            });
+                            setIsLoading(false);
+                        } else return;
+                    }
+                );
+            } else if (tool === "meanshift") {
+                await API.post("/segment/meanshift", formData).then(
+                    (response) => {
+                        if (response.status === 200) {
+                            dispatch({
+                                type: IMG_CHANGE,
+                                image: urlImage + response.data.filename,
+                            });
                             setIsLoading(false);
                         } else return;
                     }

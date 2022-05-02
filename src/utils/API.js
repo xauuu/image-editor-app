@@ -5,6 +5,6 @@ export default axios.create({
   baseURL: apiDomain,
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "application/json",
   }
 });

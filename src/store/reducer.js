@@ -4,13 +4,15 @@ import toolReducer from "./toolReducer";
 import finetuneReducer from './finetuneReducer';
 import fnvalueReducer from './fnvalueReducer';
 import flipReducer from './flipReducer';
+import imageReducer from "./imageReducer";
 
 const reducer = combineReducers({
     tab: tabReducer,
     tool: toolReducer,
     finetune: finetuneReducer,
     value: fnvalueReducer,
-    flip: flipReducer
+    flip: flipReducer,
+    img: imageReducer
 });
 
 export default reducer;

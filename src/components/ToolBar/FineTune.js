@@ -94,7 +94,7 @@ const FineTune = () => {
                 {finetunes.map(
                     (item) =>
                         item.tool === finetune && (
-                            <Box sx={{ width: 250 }}>
+                            <Box key={item.tool} sx={{ width: 250 }}>
                                 <Stack
                                     spacing={2}
                                     direction="row"
@@ -125,6 +125,7 @@ const FineTune = () => {
             <div className="finetune-wrapper">
                 {finetunes.map((item) => (
                     <ItemFineTune
+                        key={item.tool}
                         tool={item.tool}
                         icon={item.icon}
                         name={item.name}

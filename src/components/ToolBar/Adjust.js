@@ -57,6 +57,7 @@ const Adjust = () => {
             <div className="finetune-wrapper">
                 {adjusts.map((item) => (
                     <ItemFineTune
+                        key={item.tool}
                         tool={item.tool}
                         icon={item.icon}
                         name={item.name}

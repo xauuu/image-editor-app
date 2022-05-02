@@ -4,8 +4,9 @@ import useImage from "use-image";
 import Konva from "konva";
 import { useSelector } from "react-redux";
 
-const Konvas = ({ imageUrl, height, width }) => {
-    const [image] = useImage(imageUrl);
+const Konvas = ({ height, width }) => {
+    const { imgUrl, imgName, image: img } = useSelector((state) => state.img);
+    const [image, setImage] = useState()
     const imageRef = React.useRef();
     const { brighten, contrast, blur } = useSelector((state) => state.value);
     const { flipx, flipy } = useSelector((state) => state.flip);
@@ -14,20 +15,23 @@ const Konvas = ({ imageUrl, height, width }) => {
         y: height / 2,
     });
     const [imageAttr, setImageAttr] = useState({
-        x: 0,
-        y: 0,
         width: 0,
         height: 0,
     });
     const [scale, setScale] = useState(1);
 
     useEffect(() => {
+        const imgLoad = new window.Image();
+        imgLoad.src = img
+        imgLoad.crossOrigin = 'anonymous'
+        imgLoad.onload = () => {
+            setImage(imgLoad)
+        }
+    }, [img])
+
+    useEffect(() => {
         var scale1 = Math.min(width / image?.width, height / image?.height);
-        var x = width / 2 - (image?.width / 2) * scale1;
-        var y = height / 2 - (image?.height / 2) * scale1;
         setImageAttr({
-            x: x,
-            y: y,
             width: image?.width * scale1,
             height: image?.height * scale1,
         });
@@ -37,7 +41,7 @@ const Konvas = ({ imageUrl, height, width }) => {
         if (image) {
             imageRef.current.cache();
         }
-    });
+    }, [image, brighten, contrast, blur]);
 
     const handleWheel = (e) => {
         e.evt.preventDefault();
@@ -63,7 +67,6 @@ const Konvas = ({ imageUrl, height, width }) => {
         });
     };
 
-    console.log(contrast);
     return (
         <Stage
             width={width}
@@ -72,16 +75,16 @@ const Konvas = ({ imageUrl, height, width }) => {
             y={coordinates.y}
             scaleX={scale}
             scaleY={scale}
-            draggable
             onWheel={handleWheel}
         >
             <Layer>
                 <Image
+                    draggable
                     ref={imageRef}
                     scaleY={flipx ? -1 : 1}
                     scaleX={flipy ? -1 : 1}
-                    x={imageAttr.width / 2}
-                    y={imageAttr.height / 2}
+                    x={width / 2}
+                    y={height / 2}
                     width={imageAttr.width}
                     height={imageAttr.height}
                     offsetX={imageAttr.width / 2}
