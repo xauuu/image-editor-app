@@ -20,13 +20,13 @@ const adjusts = [
         id: 1,
         tool: "flipx",
         name: "Flip X",
-        icon: <CgEditFlipH />,
+        icon: <CgEditFlipV />,
     },
     {
         id: 1,
         tool: "flipy",
         name: "Flip Y",
-        icon: <CgEditFlipV />,
+        icon: <CgEditFlipH />,
     },
 ];
 

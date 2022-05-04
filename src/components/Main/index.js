@@ -6,13 +6,17 @@ import TopBar from "../TopBar/index.js";
 import "./index.css";
 
 const Main = () => {
-
+    const imageRef = React.useRef();
     return (
         <div className="container">
-            <TopBar />
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <TopBar imageRef={imageRef} />
             <div className="main">
                 <SideBar />
-                <Canvas />
+                <Canvas imageRef={imageRef} />
             </div>
         </div>
     );

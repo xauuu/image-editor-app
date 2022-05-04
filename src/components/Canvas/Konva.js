@@ -4,10 +4,9 @@ import useImage from "use-image";
 import Konva from "konva";
 import { useSelector } from "react-redux";
 
-const Konvas = ({ height, width }) => {
+const Konvas = ({ imageRef, height, width }) => {
     const { imgUrl, imgName, image: img } = useSelector((state) => state.img);
-    const [image, setImage] = useState()
-    const imageRef = React.useRef();
+    const [image, setImage] = useState();
     const { brighten, contrast, blur } = useSelector((state) => state.value);
     const { flipx, flipy } = useSelector((state) => state.flip);
     const [coordinates, setCoordinates] = useState({
@@ -22,20 +21,17 @@ const Konvas = ({ height, width }) => {
 
     useEffect(() => {
         const imgLoad = new window.Image();
-        imgLoad.src = img
-        imgLoad.crossOrigin = 'anonymous'
+        imgLoad.src = img;
+        imgLoad.crossOrigin = "anonymous";
         imgLoad.onload = () => {
-            setImage(imgLoad)
-        }
-    }, [img])
-
-    useEffect(() => {
-        var scale1 = Math.min(width / image?.width, height / image?.height);
-        setImageAttr({
-            width: image?.width * scale1,
-            height: image?.height * scale1,
-        });
-    }, [image]);
+            setImage(imgLoad);
+            var scale1 = Math.min(width / imgLoad?.width, height / imgLoad?.height);
+            setImageAttr({
+                width: imgLoad?.width * scale1,
+                height: imgLoad?.height * scale1,
+            });
+        };
+    }, [img]);
 
     useEffect(() => {
         if (image) {
