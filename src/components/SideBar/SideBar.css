@@ -10,7 +10,8 @@
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    background: rgb(248, 250, 251);
+    background: black;
+    color: white;
     align-items: center;
     justify-content: center;
     margin-bottom: 8px;
@@ -21,14 +22,20 @@
     cursor: pointer;
     margin-top: 6px;
     font-size: 11px;
+    font-weight: 500;
     line-height: 12px;
     user-select: none;
 }
 
 .sideBar-item:hover,
-.sideBar-item[aria-selected=true] {
-    background-color: aquamarine;
-    color: rgb(73, 88, 188);
+.sideBar-item[aria-selected="true"] {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.sideBar-item:hover > svg,
+.sideBar-item[aria-selected="true"] > svg {
+    color: black;
 }
 
 .imageUpload {

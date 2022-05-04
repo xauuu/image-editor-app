@@ -12,7 +12,7 @@
     width: 100%;
     position: relative;
     height: calc((100% - 94px) - 12px);
-    background: rgb(248, 250, 251);
+    /* background: rgb(248, 250, 251); */
     overflow: hidden;
     -webkit-box-flex: 1;
     flex-grow: 1;

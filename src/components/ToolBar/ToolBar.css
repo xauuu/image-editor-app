@@ -31,12 +31,12 @@
 
 .item > div[aria-selected="true"] > img {
     padding: 1px;
-    border: 2px solid rgb(73, 88, 188);
+    border: 2px solid #034694;
     border-radius: 2px;
 }
 
 .item > div[aria-selected="true"] > label {
-    color: rgb(73, 88, 188);
+    color: #0047AB;
 }
 
 .slick-prev {
@@ -84,6 +84,7 @@
     justify-content: center;
     padding: 8px;
     cursor: pointer;
+    color: rgb(118, 129, 132);
 }
 
 .finetune-item > svg {
@@ -95,7 +96,6 @@
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(118, 129, 132);
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
@@ -110,10 +110,11 @@
 }
 
 .finetune-item:hover {
-    background: rgb(236, 243, 255);
+    background: #ADD8E6;
+    color: #0E3386;
 }
 
 .finetune-item[aria-selected="true"] {
-    background: rgb(236, 243, 255);
-    color: rgb(73, 88, 188);
+    background: #ADD8E6;
+    color: #0E3386;
 }
