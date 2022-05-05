@@ -36,7 +36,7 @@
 }
 
 .item > div[aria-selected="true"] > label {
-    color: #0047AB;
+    color: #0047ab;
 }
 
 .slick-prev {
@@ -84,7 +84,7 @@
     justify-content: center;
     padding: 8px;
     cursor: pointer;
-    color: rgb(118, 129, 132);
+    color: #767474;
 }
 
 .finetune-item > svg {
@@ -110,11 +110,29 @@
 }
 
 .finetune-item:hover {
-    background: #ADD8E6;
-    color: #0E3386;
+    background: #767474;
+    color: #ffffff;
 }
 
 .finetune-item[aria-selected="true"] {
-    background: #ADD8E6;
-    color: #0E3386;
+    background: #767474;
+    color: #ffffff;
+}
+
+.MuiSlider-markLabel {
+    top: 0 !important;
+    /* position: initial!important; */
+}
+
+.MuiSlider-markLabel[style="left: 0%;"] {
+    left: 5% !important;
+}
+
+.MuiSlider-markLabel[style="left: 100%;"],
+.MuiSlider-markLabel[style="left: 259%;"] {
+    left: 95% !important;
+}
+
+.MuiSlider-sizeSmall {
+    padding: 0 !important;
 }

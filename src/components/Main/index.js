@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import Canvas from "../Canvas/index.js";
 import SideBar from "../SideBar/index.js";
 import TopBar from "../TopBar/index.js";
@@ -9,10 +8,6 @@ const Main = () => {
     const imageRef = React.useRef();
     return (
         <div className="container">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
             <TopBar imageRef={imageRef} />
             <div className="main">
                 <SideBar />

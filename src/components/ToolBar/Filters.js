@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
 import API from "../../utils/API.js";
 import "slick-carousel/slick/slick.css";
@@ -7,7 +7,7 @@ import "./ToolBar.css";
 import Item from "./ItemFilter.js";
 import { useDispatch, useSelector } from "react-redux";
 import { urlImage } from "../../store/constants.js";
-import { IMG_CHANGE } from "./../../store/actions";
+import { IMG_CHANGE, TOOL_CHANGE } from "./../../store/actions";
 
 const filterItems = [
     {
@@ -178,6 +178,13 @@ const ToolBar = ({ setIsLoading }) => {
         fetchData();
     }, [tool]);
 
+    const handleClick = (tool) => {
+        dispatch({
+            type: TOOL_CHANGE,
+            tool: tool,
+        });
+    };
+
     return (
         <Slider {...settings}>
             {filterItems.map((item) => (
@@ -187,6 +194,7 @@ const ToolBar = ({ setIsLoading }) => {
                     img={item.img}
                     name={item.name}
                     isSelected={tool === item.tool}
+                    onClick={handleClick}
                 />
             ))}
         </Slider>

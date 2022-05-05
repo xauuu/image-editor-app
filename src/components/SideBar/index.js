@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import TabItem from "./TabItem.js";
 import "./SideBar.css";
 import { SVGAdjust, SVGFinetune, SVGFilter, SVGDraw } from "../../utils/svg.js";
-import { useDispatch, useSelector } from "react-redux";
-import { IMG_CHANGE, IMG_NAME_CHANGE, IMG_UPLOAD } from "./../../store/actions";
+import { useSelector } from "react-redux";
 
 const tabs = [
     {

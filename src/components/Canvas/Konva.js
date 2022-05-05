@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Stage, Layer, Image } from "react-konva";
-import useImage from "use-image";
 import Konva from "konva";
 import { useSelector } from "react-redux";
 
 const Konvas = ({ imageRef, height, width }) => {
-    const { imgUrl, imgName, image: img } = useSelector((state) => state.img);
+    const { image: img } = useSelector((state) => state.img);
     const [image, setImage] = useState();
-    const { brighten, contrast, blur } = useSelector((state) => state.value);
+    const { brighten, contrast, blur, hue, saturation, value } = useSelector((state) => state.value);
     const { flipx, flipy } = useSelector((state) => state.flip);
     const [coordinates, setCoordinates] = useState({
         x: width / 2,
@@ -31,7 +30,7 @@ const Konvas = ({ imageRef, height, width }) => {
                 height: imgLoad?.height * scale1,
             });
         };
-    }, [img]);
+    }, [img, width, height]);
 
     useEffect(() => {
         if (image) {
@@ -90,10 +89,14 @@ const Konvas = ({ imageRef, height, width }) => {
                         Konva.Filters.Brighten,
                         Konva.Filters.Contrast,
                         Konva.Filters.Blur,
+                        Konva.Filters.HSV
                     ]}
                     blurRadius={blur}
                     brightness={brighten}
                     contrast={contrast}
+                    hue={hue}
+                    saturation={saturation}
+                    value={value}
                 />
             </Layer>
         </Stage>

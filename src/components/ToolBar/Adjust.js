@@ -33,7 +33,7 @@ const adjusts = [
 const Adjust = () => {
     const dispatch = useDispatch();
     const { finetune } = useSelector((state) => state.finetune);
-    const { flipx, flipy } = useSelector((state) => state.flip);
+    // const { flipx, flipy } = useSelector((state) => state.flip);
 
     const handleClick = (tool) => {
         dispatch({

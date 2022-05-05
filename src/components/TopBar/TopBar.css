@@ -7,7 +7,7 @@
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: justify;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .button {
@@ -60,4 +60,14 @@
     width: 1px;
     border-radius: 1px;
     background: rgb(223, 231, 237);
+}
+
+.reset {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.reset svg {
+    width: 16px;
+    height: 16px;
 }

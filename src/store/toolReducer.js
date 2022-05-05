@@ -1,7 +1,7 @@
 import { TOOL_CHANGE } from "./actions";
 
 const initialState = {
-    tool: "",
+    tool: "orgirinal",
 };
 
 const toolReducer = (state = initialState, action) => {

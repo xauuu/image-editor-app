@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch } from "react-redux";
 import { FINETUNE_VALUE_CHANGE, IMG_UPLOAD } from "./../../store/actions";
 import "./TopBar.css";
+import { SVGReset } from "../../utils/svg.js";
 
 function downloadURI(uri, name) {
     var link = document.createElement("a");
@@ -44,6 +45,18 @@ const TopBar = ({ imageRef }) => {
 
     const handleUploadClick = (e) => {
         fileRef.current.click();
+    };
+
+    const handleResetClick = () => {
+        dispatch({
+            type: FINETUNE_VALUE_CHANGE,
+            brighten: 0,
+            contrast: 0,
+            blur: 0,
+            hue: 0,
+            saturation: 0,
+            value: 0,
+        });
     };
 
     const convertBase64 = (file) => {
@@ -88,23 +101,14 @@ const TopBar = ({ imageRef }) => {
             <div className="button download" onClick={handleDownloadClick}>
                 <span>Download</span>
             </div>
+            <div className="reset" onClick={handleResetClick}>
+                <SVGReset />
+            </div>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
                     <DialogContentText>
                         Nhập tên hình ảnh để tải xuống
                     </DialogContentText>
-                    {/* <TextField
-                        autoFocus
-                        value={imgName}
-                        margin="dense"
-                        id="name"
-                        label="Tên hình ảnh"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={handleInputChange}
-                        endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-                    /> */}
                     <TextField
                         autoFocus
                         value={imgName}

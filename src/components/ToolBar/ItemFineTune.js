@@ -1,9 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
 const ItemFineTune = ({ icon, name, tool, isSelected, onClick }) => {
-
-    const dispacth = useDispatch();
 
     const handleClick = () => {
         onClick(tool)

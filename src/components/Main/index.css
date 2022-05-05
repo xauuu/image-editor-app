@@ -10,7 +10,16 @@
     overflow: auto;
     position: relative;
     background: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border: 0.4rem solid #fff; */
+    animation: flicker 10.5s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 100% {
+        box-shadow: 0 0 0.5rem #fff, inset 0 0 0.2rem #fff, 0 0 1rem #08f,
+            inset 0 0 0rem #08f, 0 0 3em #08f, inset 0 0 0rem #08f;
+    }
 }
 
 .main {
@@ -20,5 +29,5 @@
     height: calc(100% - 35px);
     padding: 10px;
     /* border: solid .2px; */
-    background-color: white;
+    /* background-color: white; */
 }
