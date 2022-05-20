@@ -20,7 +20,7 @@ function downloadURI(uri, name) {
     document.body.removeChild(link);
 }
 
-const TopBar = ({ imageRef }) => {
+const TopBar = ({ layerEl }) => {
     const fileRef = React.useRef(null);
     const [open, setOpen] = React.useState(false);
     const [imgName, setImgName] = React.useState(null);
@@ -31,7 +31,7 @@ const TopBar = ({ imageRef }) => {
     };
 
     const handleDownload = () => {
-        const uri = imageRef.current.toDataURL();
+        const uri = layerEl.current.toDataURL();
         if (imgName != null) {
             downloadURI(uri, imgName + ".png");
             setOpen(false);
@@ -56,6 +56,7 @@ const TopBar = ({ imageRef }) => {
             hue: 0,
             saturation: 0,
             value: 0,
+            rotate: 0
         });
     };
 

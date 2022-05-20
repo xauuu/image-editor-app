@@ -6,8 +6,9 @@ import Loading from "./../Loading/index";
 import FineTune from "../ToolBar/FineTune.js";
 import { useSelector } from "react-redux";
 import Adjust from "./../ToolBar/Adjust";
+import Draw from './../ToolBar/Draw';
 
-const Canvas = ({ imageRef }) => {
+const Canvas = ({ imageRef, layerEl }) => {
     const canvasRef = useRef();
     const [canvas, setCanvas] = useState({ height: 0, width: 0 });
 
@@ -28,15 +29,16 @@ const Canvas = ({ imageRef }) => {
                 {isLoading && <Loading />}
                 <Konvas
                     imageRef={imageRef}
+                    layerEl={layerEl}
                     height={canvas.height}
                     width={canvas.width}
                 />
             </div>
             <div className="tool-bar">
                 {tab === "filter" && <Filters setIsLoading={setIsLoading} />}
-
                 {tab === "finetune" && <FineTune />}
                 {tab === "adjust" && <Adjust />}
+                {tab === "draw" && <Draw />}
             </div>
         </div>
     );

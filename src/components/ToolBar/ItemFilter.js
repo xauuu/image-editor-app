@@ -1,12 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import "./ToolBar.css";
-import { TOOL_CHANGE } from './../../store/actions';
 
-const Item = ({ tool, img, name, isSelected, onClick }) => {
+const Item = ({ filter, img, name, isSelected, onClick }) => {
     
     const handleClick = () => {
-        onClick(tool)
+        onClick(filter)
     }
 
     return (

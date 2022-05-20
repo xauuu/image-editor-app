@@ -1,4 +1,4 @@
-import { IMG_CHANGE, IMG_NAME_CHANGE, IMG_UPLOAD } from "./actions";
+import { IMG_CHANGE, IMG_UPLOAD } from "./actions";
 
 const initialState = {
     imgUrl: "",

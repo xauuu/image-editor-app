@@ -5,13 +5,14 @@ import TopBar from "../TopBar/index.js";
 import "./index.css";
 
 const Main = () => {
+    const layerEl = React.createRef();
     const imageRef = React.useRef();
     return (
         <div className="container">
-            <TopBar imageRef={imageRef} />
+            <TopBar layerEl={layerEl} />
             <div className="main">
                 <SideBar />
-                <Canvas imageRef={imageRef} />
+                <Canvas imageRef={imageRef} layerEl={layerEl}/>
             </div>
         </div>
     );
