@@ -8,66 +8,67 @@ import Item from "./ItemFilter.js";
 import { useDispatch, useSelector } from "react-redux";
 import { urlImage } from "../../store/constants.js";
 import { FILTER_CHANGE, IMG_CHANGE } from "./../../store/actions";
+
 const filterItems = [
     {
         filter: "original",
         name: "Original",
         path: "",
-        img: "/assets/original.jpg",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "reverse",
-        name: "Reverse",
-        path: "/point/reverse",
-        img: "/assets/reverse.png",
+        filter: "arithmetic-mean",
+        name: "Arithmetic Mean",
+        path: "/restoration/tb-so-hoc",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "log",
-        name: "Log",
-        path: "/point/log",
-        img: "/assets/log.png",
+        filter: "geometric-mean",
+        name: "Geometric Mean",
+        path: "/restoration/tb-hinh-hoc",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "threshold",
-        name: "Threshold",
-        path: "/point/threshold",
-        img: "/assets/threshold.png",
+        filter: "contraharmonic-mean",
+        name: "Contraharmonic Mean",
+        path: "/restoration/tb-contraharmonic",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "hist",
-        name: "Histogram",
-        path: "/point/hist",
-        img: "/assets/Histogram.png",
+        filter: "harmonic-mean",
+        name: "Harmonic Mean",
+        path: "/restoration/tb-harmonic",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "blur",
-        name: "Blur",
-        path: "/filter/gaussian-blur",
-        img: "/assets/Blur.png",
+        filter: "median",
+        name: "Median",
+        path: "/restoration/loc-trung-vi",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
     {
-        filter: "laplacian",
-        name: "Laplacian",
-        path: "/filter/laplacian",
-        img: "/assets/Laplacian.png",
+        filter: "min",
+        name: "Min",
+        path: "/restoration/loc-min",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
-    // {
-    //     filter: "grahp-cut",
-    //     name: "Grahp Cut",
-    //     path: "/segment/graph-cut",
-    //     img: "/assets/Grahp Cut.png",
-    // },
-    // {
-    //     filter: "meanshift",
-    //     name: "Meanshift",
-    //     path: "/segment/meanshift",
-    //     img: "/assets/Meanshift.png",
-    // },
     {
-        filter: "kmean",
-        name: "Kmean",
-        path: "/segment/kmean",
-        img: "/assets/Kmean.png",
+        filter: "max",
+        name: "Max",
+        path: "/restoration/loc-max",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
+    },
+    {
+        filter: "mid-point",
+        name: "Mid Point",
+        path: "/restoration/loc-trung-vi",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
+    },
+    {
+        filter: "alpha",
+        name: "Alpha",
+        path: "/restoration/loc-alpha",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
 ];
 const settings = {
@@ -78,7 +79,7 @@ const settings = {
     slidesToScroll: 1,
 };
 
-const Filter = ({ setIsLoading }) => {
+const Restoration = ({ setIsLoading }) => {
     const dispatch = useDispatch();
     const { filter } = useSelector((state) => state.filter);
     const { imgUrl, imgName } = useSelector((state) => state.img);
@@ -136,4 +137,4 @@ const Filter = ({ setIsLoading }) => {
     );
 };
 
-export default Filter;
+export default Restoration;

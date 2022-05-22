@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import Filters from "../ToolBar/Filters.js";
-import "./Canvas.css";
+import { useSelector } from "react-redux";
 import Konvas from "./Konva.js";
+import Filters from "../ToolBar/Filters.js";
 import Loading from "./../Loading/index";
 import FineTune from "../ToolBar/FineTune.js";
-import { useSelector } from "react-redux";
 import Adjust from "./../ToolBar/Adjust";
 import Draw from './../ToolBar/Draw';
+import "./Canvas.css";
+import Restoration from "../ToolBar/Restoration.js";
 
 const Canvas = ({ imageRef, layerEl }) => {
     const canvasRef = useRef();
@@ -38,6 +39,7 @@ const Canvas = ({ imageRef, layerEl }) => {
                 {tab === "filter" && <Filters setIsLoading={setIsLoading} />}
                 {tab === "finetune" && <FineTune />}
                 {tab === "adjust" && <Adjust />}
+                {tab === "restoration" && <Restoration setIsLoading={setIsLoading} />}
                 {tab === "draw" && <Draw />}
             </div>
         </div>

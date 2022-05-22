@@ -9,7 +9,7 @@ const Main = () => {
     const imageRef = React.useRef();
     return (
         <div className="container">
-            <TopBar layerEl={layerEl} />
+            <TopBar imageRef={imageRef} layerEl={layerEl} />
             <div className="main">
                 <SideBar />
                 <Canvas imageRef={imageRef} layerEl={layerEl}/>

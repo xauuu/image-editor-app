@@ -1,5 +1,5 @@
 import React from "react";
-import { BiRectangle, BiPolygon, BiCircle, BiText } from "react-icons/bi";
+import { BiRectangle, BiStar, BiCircle, BiText, BiPencil, BiEraser } from "react-icons/bi";
 import { TOOL_CHANGE } from "../../store/actions.js";
 import { useDispatch } from "react-redux";
 import ItemFineTune from "./ItemFineTune";
@@ -26,10 +26,16 @@ const draws = [
     },
     {
         id: 3,
-        tool: "polygon",
-        name: "Polygon",
-        icon: <BiPolygon />,
+        tool: "star",
+        name: "Star",
+        icon: <BiStar />,
     },
+    {
+        id: 4,
+        tool: "pen",
+        name: "Pen",
+        icon: <BiPencil />,
+    }
 ];
 
 const Draw = () => {
@@ -45,7 +51,9 @@ const Draw = () => {
 
     return (
         <React.Fragment>
-            <div className="toolbar-options"></div>
+            <div className="toolbar-options">
+                
+            </div>
             <div className="finetune-wrapper">
                 {draws.map((item) => (
                     <ItemFineTune

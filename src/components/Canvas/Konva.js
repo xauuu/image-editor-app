@@ -6,7 +6,8 @@ import Circ from "./../tools/Circle";
 import { addTextNode } from "./../tools/textNode";
 import { v1 as uuidv1 } from "uuid";
 import Rectangle from "./../tools/Rectangle";
-import { addLine } from './../tools/line';
+import { addLine } from "./../tools/line";
+import Stars from "../tools/Star.js";
 
 const Konvas = ({ imageRef, layerEl, height, width }) => {
     const stageEl = React.createRef();
@@ -14,6 +15,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
     const [scale, setScale] = useState(1);
     const [circles, setCircles] = useState([]);
     const [rectangles, setRectangles] = useState([]);
+    const [stars, setStars] = useState([])
     const [shapes, setShapes] = useState([]);
     const [selectedId, selectShape] = useState(null);
     const [, updateState] = React.useState();
@@ -23,6 +25,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         useSelector((state) => state.value);
     const { flipx, flipy } = useSelector((state) => state.flip);
     const { tool } = useSelector((state) => state.tool);
+    const { tab } = useSelector((state) => state.tab);
     const [coordinates, setCoordinates] = useState({
         x: width / 2,
         y: height / 2,
@@ -70,10 +73,16 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                 stage.getPointerPosition().y
             );
         }
+        if (tool === "star") {
+            addStar(
+                stage.getPointerPosition().x,
+                stage.getPointerPosition().y
+            );
+        }
         if (tool === "text") {
             drawText();
         }
-        if (tool === "polygon") {
+        if (tool === "pen") {
             drawLine();
         }
     };
@@ -110,13 +119,27 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         setShapes(shs);
     };
 
-    const drawLine = () => {  
-        addLine(stageEl.current.getStage(), layerEl.current);  
-      }; 
-    
-      const eraseLine = () => {  
-        addLine(stageEl.current.getStage(), layerEl.current, "erase");  
-      };
+    const addStar = (x, y) => {
+        const s = {
+            x: x,
+            y: y,
+            numPoints: 5,
+            innerRadius: 20,
+            outerRadius: 40,
+            width: 100,
+            height: 100,
+            fill: "red",
+            id: `star${stars.length + 1}`,
+        };
+        const star = stars.concat([s]);
+        setStars(star);
+        const shs = shapes.concat([`star${stars.length + 1}`]);
+        setShapes(shs);
+    };
+
+    const drawLine = () => {
+        addLine(stageEl.current.getStage(), layerEl.current);
+    };
 
     const drawText = () => {
         const id = addTextNode(stageEl.current.getStage(), layerEl.current);
@@ -160,6 +183,11 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                 rectangles.splice(index, 1);
                 setRectangles(rectangles);
             }
+            index = stars.findIndex((r) => r.id === selectedId);
+            if (index !== -1) {
+                stars.splice(index, 1);
+                setStars(stars);
+            }
             forceUpdate();
         }
     });
@@ -186,7 +214,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         >
             <Layer ref={layerEl}>
                 <Image
-                    draggable={true}
+                    draggable={tab === 'draw' ? false : true}
                     ref={imageRef}
                     scaleY={flipx ? -1 : 1}
                     scaleX={flipy ? -1 : 1}
@@ -241,6 +269,23 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                                 const rects = rectangles.slice();
                                 rects[i] = newAttrs;
                                 setRectangles(rects);
+                            }}
+                        />
+                    );
+                })}
+                {stars.map((star, i) => {
+                    return (
+                        <Stars
+                            key={i}
+                            shapeProps={star}
+                            isSelected={star.id === selectedId}
+                            onSelect={() => {
+                                selectShape(star.id);
+                            }}
+                            onChange={(newAttrs) => {
+                                const star = stars.slice();
+                                star[i] = newAttrs;
+                                setStars(star);
                             }}
                         />
                     );

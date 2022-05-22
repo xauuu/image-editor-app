@@ -1,7 +1,7 @@
 import React from "react";
 import TabItem from "./TabItem.js";
 import "./SideBar.css";
-import { SVGAdjust, SVGFinetune, SVGFilter, SVGDraw } from "../../utils/svg.js";
+import { SVGAdjust, SVGFinetune, SVGFilter, SVGDraw, SVGRestoration } from "../../utils/svg.js";
 import { useSelector } from "react-redux";
 
 const tabs = [
@@ -19,6 +19,11 @@ const tabs = [
         icon: <SVGFilter />,
         tab: "filter",
         name: "Filter",
+    },
+    {
+        icon: <SVGRestoration />,
+        tab: "restoration",
+        name: "Restoration",
     },
     {
         icon: <SVGDraw />,
