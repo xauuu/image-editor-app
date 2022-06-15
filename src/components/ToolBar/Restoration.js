@@ -28,12 +28,12 @@ const filterItems = [
         path: "/restoration/tb-hinh-hoc",
         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
     },
-    {
-        filter: "contraharmonic-mean",
-        name: "Contraharmonic Mean",
-        path: "/restoration/tb-contraharmonic",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
-    },
+    // {
+    //     filter: "contraharmonic-mean",
+    //     name: "Contraharmonic Mean",
+    //     path: "/restoration/tb-contraharmonic",
+    //     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlYcLkXShDO3OpHYiXIXwPPa8LSiWg0hfsQ&usqp=CAU",
+    // },
     {
         filter: "harmonic-mean",
         name: "Harmonic Mean",
