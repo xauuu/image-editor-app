@@ -1,13 +1,102 @@
-import React, { useEffect, useState } from "react";
-import { Stage, Layer, Image } from "react-konva";
+import React, { useEffect, useState, useRef } from "react";
+import { Stage, Layer, Image, Text, Group, Transformer } from "react-konva";
 import Konva from "konva";
 import { useSelector } from "react-redux";
 import Circ from "./../tools/Circle";
-import { addTextNode } from "./../tools/textNode";
-import { v1 as uuidv1 } from "uuid";
 import Rectangle from "./../tools/Rectangle";
 import { addLine } from "./../tools/line";
 import Stars from "../tools/Star.js";
+import { TextEditor } from "./../tools/TextEditor";
+
+const SimpleText = ({ shapeProps, isSelected, onSelect, onChange }) => {
+    const shapeRef = useRef();
+    const trRef = useRef();
+
+    const [editorEnabled, setEditorEnabled] = useState(false);
+    const [isTransform, setIsTransform] = useState(false);
+    const [isCursor, setIsCursor] = useState({});
+
+    useEffect(() => {
+        if (isSelected && trRef.current !== null) {
+            // we need to attach transformer manually
+            trRef.current?.setNodes([shapeRef.current]);
+            trRef.current.getLayer().batchDraw();
+        }
+    }, [isSelected]);
+
+    return (
+        <Group draggable>
+            <Text
+                onClick={onSelect}
+                onTap={onSelect}
+                onDblClick={(e) => {
+                    const absPosition = e.target.getAbsolutePosition();
+                    setEditorEnabled(true);
+                    setIsCursor(absPosition);
+                }}
+                ref={shapeRef}
+                visible={!editorEnabled}
+                {...shapeProps}
+                draggable={true}
+                onDragEnd={(e) => {
+                    onChange({
+                        ...shapeProps,
+                        x: e.target.x(),
+                        y: e.target.y(),
+                    });
+                }}
+                onTransformEnd={(e) => {
+                    // transformer is changing scale of the node
+                    // and NOT its width or height
+                    // but in the store we have only width and height
+                    // to match the data better we will reset scale on transform end
+                    const node = shapeRef.current;
+                    const scaleX = node.scaleX();
+                    const scaleY = node.scaleY();
+
+                    // we will reset it back
+
+                    onChange({
+                        ...shapeProps,
+                        x: node.x(),
+                        y: node.y(),
+                        // set minimal value
+                        width: Math.max(5, node.width() * scaleX),
+                        height: Math.max(node.height() * scaleY),
+                    });
+                }}
+                perfectDrawEnabled={false}
+            />
+
+            {editorEnabled && (
+                <Group>
+                    <TextEditor
+                        value={shapeProps.text}
+                        textNodeRef={shapeRef}
+                        onChange={onChange}
+                        onBlur={() => {
+                            setEditorEnabled(false);
+                        }}
+                        cursorPosition={isCursor}
+                    />
+                </Group>
+            )}
+
+            {isSelected && (
+                <Transformer
+                    rotateEnabled={false}
+                    flipEnabled={false}
+                    enabledAnchors={["middle-left", "middle-right"]}
+                    ref={trRef}
+                    boundBoxFunc={(oldBox, newBox) => {
+                        newBox.width = Math.max(30, newBox.width);
+                        return newBox;
+                    }}
+                />
+            )}
+        </Group>
+    );
+};
 
 const Konvas = ({ imageRef, layerEl, height, width }) => {
     const stageEl = React.createRef();
@@ -15,7 +104,8 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
     const [scale, setScale] = useState(1);
     const [circles, setCircles] = useState([]);
     const [rectangles, setRectangles] = useState([]);
-    const [stars, setStars] = useState([])
+    const [stars, setStars] = useState([]);
+    const [texts, setTexts] = useState([]);
     const [shapes, setShapes] = useState([]);
     const [selectedId, selectShape] = useState(null);
     const [, updateState] = React.useState();
@@ -74,13 +164,10 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             );
         }
         if (tool === "star") {
-            addStar(
-                stage.getPointerPosition().x,
-                stage.getPointerPosition().y
-            );
+            addStar(stage.getPointerPosition().x, stage.getPointerPosition().y);
         }
         if (tool === "text") {
-            drawText();
+            addText(stage.getPointerPosition().x, stage.getPointerPosition().y);
         }
         if (tool === "pen") {
             drawLine();
@@ -141,9 +228,21 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         addLine(stageEl.current.getStage(), layerEl.current);
     };
 
-    const drawText = () => {
-        const id = addTextNode(stageEl.current.getStage(), layerEl.current);
-        const shs = shapes.concat([id]);
+    const addText = (x, y) => {
+        const t = {
+            x: x,
+            y: y,
+            text: "xau xau xa",
+            fontSize: 29,
+            fill: "#000",
+            fontStyle: "normal",
+            id: `text${texts.length + 1}`,
+            object: "simpleText",
+            width: 100,
+        };
+        const text = texts.concat([t]);
+        setTexts(text);
+        const shs = shapes.concat([`text${texts.length + 1}`]);
         setShapes(shs);
     };
 
@@ -188,9 +287,23 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                 stars.splice(index, 1);
                 setStars(stars);
             }
+            index = texts.findIndex((r) => r.id === selectedId);
+            if (index !== -1) {
+                texts.splice(index, 1);
+                setTexts(texts);
+            }
             forceUpdate();
         }
     });
+
+    const checkDeselect = (e) => {
+        const clickedOnEmpty = e.target === e.target.getStage();
+        setIsDraw(false);
+        if (clickedOnEmpty) {
+            selectShape(null);
+            setIsDraw(true);
+        }
+      };
 
     return (
         <Stage
@@ -202,19 +315,13 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             scaleX={scale}
             scaleY={scale}
             onWheel={handleWheel}
-            onMouseDown={(e) => {
-                const clickedOnEmpty = e.target === e.target.getStage();
-                setIsDraw(false);
-                if (clickedOnEmpty) {
-                    selectShape(null);
-                    setIsDraw(true);
-                }
-            }}
+            onMouseDown={checkDeselect}
+            onTouchStart={checkDeselect}
             onClick={handleLayerClick}
         >
             <Layer ref={layerEl}>
                 <Image
-                    draggable={tab === 'draw' ? false : true}
+                    draggable={tab === "draw" ? false : true}
                     ref={imageRef}
                     scaleY={flipx ? -1 : 1}
                     scaleX={flipy ? -1 : 1}
@@ -239,6 +346,23 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                     saturation={saturation}
                     value={value}
                 />
+                {texts.map((value, index) => (
+                    <>
+                        <SimpleText
+                            key={value.id}
+                            shapeProps={value}
+                            isSelected={value.id === selectedId}
+                            onSelect={() => {
+                                selectShape(value.id);
+                            }}
+                            onChange={(newAttrs) => {
+                                const text = texts.slice();
+                                text[index] = newAttrs;
+                                setTexts(text);
+                            }}
+                        />
+                    </>
+                ))}
                 {circles.map((circle, i) => {
                     return (
                         <Circ

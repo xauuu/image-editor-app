@@ -1,9 +1,17 @@
 import React from "react";
-import { BiRectangle, BiStar, BiCircle, BiText, BiPencil, BiEraser } from "react-icons/bi";
+import {
+    BiRectangle,
+    BiStar,
+    BiCircle,
+    BiText,
+    BiPencil,
+    BiEraser,
+} from "react-icons/bi";
 import { TOOL_CHANGE } from "../../store/actions.js";
 import { useDispatch } from "react-redux";
 import ItemFineTune from "./ItemFineTune";
 import { useSelector } from "react-redux";
+import "react-color-palette/lib/css/styles.css";
 
 const draws = [
     {
@@ -35,12 +43,13 @@ const draws = [
         tool: "pen",
         name: "Pen",
         icon: <BiPencil />,
-    }
+    },
 ];
 
 const Draw = () => {
     const dispatch = useDispatch();
     const { tool } = useSelector((state) => state.tool);
+    const [color, setColor] = React.useState("#000000");
 
     const handleClick = (tool) => {
         dispatch({
@@ -52,7 +61,14 @@ const Draw = () => {
     return (
         <React.Fragment>
             <div className="toolbar-options">
-                
+                <div className="color-picker">
+                    <input
+                        className="color-triggerer"
+                        type="color"
+                        value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                    />
+                </div>
             </div>
             <div className="finetune-wrapper">
                 {draws.map((item) => (
