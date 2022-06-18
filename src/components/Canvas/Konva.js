@@ -149,6 +149,16 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         }
     }, [image, brighten, contrast, blur]);
 
+    useEffect(() => {
+        if (tool === "reset") {
+            setCircles([]);
+            setRectangles([]);
+            setStars([]);
+            setTexts([]);
+            setShapes([])
+        }
+    }, [tool]);
+
     const handleLayerClick = (e) => {
         const stage = e.target.getStage();
         if (!isDraw) return;
@@ -233,7 +243,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         const t = {
             x: x,
             y: y,
-            text: "",
+            text: "hello world",
             fontSize: 29,
             fill: color,
             fontStyle: "normal",

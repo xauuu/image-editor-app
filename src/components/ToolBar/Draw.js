@@ -38,10 +38,16 @@ const draws = [
         name: "Star",
         icon: <BiStar />,
     },
+    // {
+    //     id: 4,
+    //     tool: "pen",
+    //     name: "Pen",
+    //     icon: <BiPencil />,
+    // },
     {
-        id: 4,
-        tool: "pen",
-        name: "Pen",
+        id: 5,
+        tool: "reset",
+        name: "Reset",
         icon: <BiPencil />,
     },
 ];
