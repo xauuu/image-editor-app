@@ -7,7 +7,7 @@ import {
     BiPencil,
     BiEraser,
 } from "react-icons/bi";
-import { TOOL_CHANGE } from "../../store/actions.js";
+import { COLOR_CHANGE, TOOL_CHANGE } from "../../store/actions.js";
 import { useDispatch } from "react-redux";
 import ItemFineTune from "./ItemFineTune";
 import { useSelector } from "react-redux";
@@ -49,12 +49,22 @@ const draws = [
 const Draw = () => {
     const dispatch = useDispatch();
     const { tool } = useSelector((state) => state.tool);
-    const [color, setColor] = React.useState("#000000");
+    // const [color, setColor] = React.useState("#000000");
+    const { color } = useSelector((state) => state.color);
 
     const handleClick = (tool) => {
         dispatch({
             type: TOOL_CHANGE,
             tool: tool,
+        });
+    };
+
+    console.log(color);
+
+    const handleColorChange = (e) => {
+        dispatch({
+            type: COLOR_CHANGE,
+            color: e.target.value,
         });
     };
 
@@ -66,7 +76,7 @@ const Draw = () => {
                         className="color-triggerer"
                         type="color"
                         value={color}
-                        onChange={(e) => setColor(e.target.value)}
+                        onChange={handleColorChange}
                     />
                 </div>
             </div>

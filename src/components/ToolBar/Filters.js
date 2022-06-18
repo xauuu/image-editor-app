@@ -24,6 +24,12 @@ const filterItems = [
         img: "/assets/original.jpg",
     },
     {
+        filter: "greyscale",
+        name: "Greyscale",
+        path: "/filter/greyscale",
+        img: "/assets/greyscale.png",
+    },
+    {
         filter: "reverse",
         name: "Reverse",
         path: "/point/reverse",
@@ -86,39 +92,57 @@ const filterItems = [
     {
         filter: "warm",
         name: "Warming",
-        path: "/fancy/warming",
+        path: "/filter/warming",
         img: "/assets/Warming.png",
     },
     {
         filter: "cool",
         name: "Cooling",
-        path: "/fancy/cooling",
+        path: "/filter/cooling",
         img: "/assets/Cooling.png",
     },
     {
         filter: "moon",
         name: "Moon",
-        path: "/fancy/moon",
+        path: "/filter/moon",
         img: "/assets/moon.png",
     },
     {
         filter: "cartoon",
         name: "Cartoon",
-        path: "/fancy/cartoon",
+        path: "/filter/cartoon",
         img: "/assets/Cartoon.png",
     },
     {
         filter: "pencil",
         name: "Pencil",
-        path: "/fancy/pencil-sketch-grey",
+        path: "/filter/pencil-sketch-grey",
         img: "/assets/Pencil.png",
     },
-    // {
-    //     filter: "vignette",
-    //     name: "Vignette",
-    //     path: "/special/apply_vignette",
-    //     img: "/assets/vignette.png",
-    // },
+    {
+        filter: "pencil-color",
+        name: "Pencil Color",
+        path: "/filter/pencil-sketch-color",
+        img: "/assets/Pencil-color.png",
+    },
+    {
+        filter: "sepia",
+        name: "sepia",
+        path: "/filter/sepia",
+        img: "/assets/HDR.png",
+    },
+    {
+        filter: "hdr",
+        name: "HDR",
+        path: "/filter/HDR",
+        img: "/assets/HDR.png",
+    },
+    {
+        filter: "vintage",
+        name: "Vintage",
+        path: "/filter/vintage",
+        img: "/assets/vintage.png",
+    },
     // {
     //     filter: "xpro",
     //     name: "Xpro",
@@ -126,12 +150,13 @@ const filterItems = [
     //     img: "/assets/xpro.png",
     // },
 ];
+
 const settings = {
     dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 6,
-    slidesToScroll: 1,
+    slidesToScroll: 6,
 };
 
 const Filter = ({ setIsLoading }) => {
@@ -147,6 +172,15 @@ const Filter = ({ setIsLoading }) => {
         x: 5,
         k: 3,
     });
+
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            uri: imgUrl,
+            name: imgName,
+        });
+    }, [imgUrl, imgName]);
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickSubmit = async () => {

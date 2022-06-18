@@ -114,6 +114,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
     const { brighten, contrast, blur, hue, saturation, value, rotate } =
         useSelector((state) => state.value);
     const { flipx, flipy } = useSelector((state) => state.flip);
+    const { color } = useSelector((state) => state.color);
     const { tool } = useSelector((state) => state.tool);
     const { tab } = useSelector((state) => state.tab);
     const [coordinates, setCoordinates] = useState({
@@ -182,7 +183,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             y: y,
             width: 100,
             height: 100,
-            fill: "red",
+            fill: color,
             id: `circ${circles.length + 1}`,
         };
         const circs = circles.concat([circ]);
@@ -197,7 +198,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             y: y,
             width: 100,
             height: 100,
-            fill: "red",
+            fill: color,
             id: `rect${rectangles.length + 1}`,
         };
         const rects = rectangles.concat([rect]);
@@ -215,7 +216,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             outerRadius: 40,
             width: 100,
             height: 100,
-            fill: "red",
+            fill: color,
             id: `star${stars.length + 1}`,
         };
         const star = stars.concat([s]);
@@ -232,9 +233,9 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
         const t = {
             x: x,
             y: y,
-            text: "xau xau xa",
+            text: "",
             fontSize: 29,
-            fill: "#000",
+            fill: color,
             fontStyle: "normal",
             id: `text${texts.length + 1}`,
             object: "simpleText",
@@ -303,7 +304,7 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
             selectShape(null);
             setIsDraw(true);
         }
-      };
+    };
 
     return (
         <Stage
@@ -346,23 +347,6 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                     saturation={saturation}
                     value={value}
                 />
-                {texts.map((value, index) => (
-                    <>
-                        <SimpleText
-                            key={value.id}
-                            shapeProps={value}
-                            isSelected={value.id === selectedId}
-                            onSelect={() => {
-                                selectShape(value.id);
-                            }}
-                            onChange={(newAttrs) => {
-                                const text = texts.slice();
-                                text[index] = newAttrs;
-                                setTexts(text);
-                            }}
-                        />
-                    </>
-                ))}
                 {circles.map((circle, i) => {
                     return (
                         <Circ
@@ -414,6 +398,23 @@ const Konvas = ({ imageRef, layerEl, height, width }) => {
                         />
                     );
                 })}
+                {texts.map((value, index) => (
+                    <>
+                        <SimpleText
+                            key={value.id}
+                            shapeProps={value}
+                            isSelected={value.id === selectedId}
+                            onSelect={() => {
+                                selectShape(value.id);
+                            }}
+                            onChange={(newAttrs) => {
+                                const text = texts.slice();
+                                text[index] = newAttrs;
+                                setTexts(text);
+                            }}
+                        />
+                    </>
+                ))}
             </Layer>
         </Stage>
     );
